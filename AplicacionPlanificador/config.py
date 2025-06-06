@@ -1,0 +1,230 @@
+import os
+import pandas as pd
+
+SUCURSALES = [
+    'COYOACAN', 'CULIACAN', 'CULIACAN CAÑADAS', 'CULIACAN COLEGIO MILITAR',
+    'CULIACAN LA CONQUISTA', 'CULIACAN LAS TORRES', 'CULIACAN NAKAYAMA', 'CULIACAN UNIVERSITARIOS'
+]
+
+ESTUDIOS = [
+    'PAPANICOLAOU', 'NUTRICION', 'LABORATORIO', 'RAYOS X', 'TOMOGRAFIA',
+    'ULTRASONIDO', 'MASTOGRAFIA', 'OPTOMETRIA', 'RESONANCIA MAGNETICA',
+    'ELECTROCARDIOGRAMA', 'DENSITOMETRIA'
+]
+
+# # Cargar TAPs desde el archivo Excel
+# TAP = {suc: {} for suc in SUCURSALES}
+
+# excel_path = os.path.join(os.path.dirname(__file__), 'data', 'medias_por_estudio_sucursal.xlsx')
+# if os.path.exists(excel_path):
+#     df = pd.read_excel(excel_path)
+#     for _, row in df.iterrows():
+#         suc = row['Sucursal']
+#         est = row['EstudioModalidad']
+#         tap = row['TAPMinutos']
+#         if suc in TAP:
+#             TAP[suc][est] = tap
+# else:
+#     print(f"[WARN] No se encontró el archivo de medias: {excel_path}")
+
+# Medias de tiempo de atención por sucursal (en minutos, ejemplo)
+MEDIAS = {
+    'COYOACAN': 15,
+    'GUADALUPE': 12,
+    'MONTERREY': 14,
+    'PUEBLA': 13,
+    'TOLUCA': 16
+}
+
+TAP = {
+    'COYOACAN': {
+        'DENSITOMETRIA': 6.610322401334074,
+        'ELECTROCARDIOGRAMA': 6.690046583850932,
+        'LABORATORIO': 3.164254202179536,
+        'MASTOGRAFIA': 8.694220705346986,
+        'NUTRICION': 10.7573139158576,
+        'OPTOMETRIA': 10.9835315607875,
+        'PAPANICOLAOU': 7.333514739229025,
+        'RAYOS X': 4.091470480381371,
+        'RESONANCIA MAGNETICA': 13.34094594594595,
+        'TOMOGRAFIA': 9.506938053097345,
+        'ULTRASONIDO': 9.52620391863731
+    },
+    'CULIACAN': {
+        'DENSITOMETRIA': 8.174250585480094,
+        'ELECTROCARDIOGRAMA': 7.023057553956834,
+        'LABORATORIO': 3.638434389140271,
+        'MASTOGRAFIA': 7.518201970443349,
+        'NUTRICION': 12.39682042833608,
+        'OPTOMETRIA': 10.84771599657827,
+        'PAPANICOLAOU': 8.687080291970803,
+        'RAYOS X': 4.928359872611465,
+        'RESONANCIA MAGNETICA': 15.99040816326531,
+        'TOMOGRAFIA': 7.484630541871921,
+        'ULTRASONIDO': 10.70754500818331
+    },
+    'CULIACAN CAÑADAS': {
+        'DENSITOMETRIA': 6.93983546617916,
+        'ELECTROCARDIOGRAMA': 6.651483739837399,
+        'LABORATORIO': 3.524980525803311,
+        'MASTOGRAFIA': 8.1166,
+        'NUTRICION': 12.86184149184149,
+        'OPTOMETRIA': 8.992326732673268,
+        'PAPANICOLAOU': 7.79945,
+        'RAYOS X': 6.017052631578947,
+        'ULTRASONIDO': 9.856613776393216
+    },
+    'CULIACAN COLEGIO MILITAR': {
+        'DENSITOMETRIA': 7.42203781512605,
+        'ELECTROCARDIOGRAMA': 7.531783783783784,
+        'LABORATORIO': 3.03338879645036,
+        'MASTOGRAFIA': 8.692777777777778,
+        'OPTOMETRIA': 10.49205764611689,
+        'PAPANICOLAOU': 7.986635944700461,
+        'RAYOS X': 5.614786324786325,
+        'RESONANCIA MAGNETICA': 16.56571428571429,
+        'TOMOGRAFIA': 9.467216828478964,
+        'ULTRASONIDO': 10.2759748427673
+    },
+    'CULIACAN LA CONQUISTA': {
+        'ELECTROCARDIOGRAMA': 7.63961038961039,
+        'LABORATORIO': 3.12287100456621,
+        'OPTOMETRIA': 7.983983286908078,
+        'PAPANICOLAOU': 7.962916666666668,
+        'ULTRASONIDO': 10.42087412587412
+    },
+    'CULIACAN LAS TORRES': {
+        'ELECTROCARDIOGRAMA': 6.954605678233439,
+        'LABORATORIO': 3.050912547528517,
+        'NUTRICION': 12.70110662650603,
+        'OPTOMETRIA': 7.822147651006712,
+        'PAPANICOLAOU': 8.268297872340426,
+        'RAYOS X': 4.551912751677852,
+        'ULTRASONIDO': 10.66841491841492
+    },
+    'CULIACAN NAKAYAMA': {
+        'ELECTROCARDIOGRAMA': 7.40640625,
+        'LABORATORIO': 3.3456346749226,
+        'OPTOMETRIA': 8.058384955752212,
+        'PAPANICOLAOU': 7.7948,
+        'ULTRASONIDO': 10.74363636363636
+    },
+    'CULIACAN UNIVERSITARIOS': {
+        'DENSITOMETRIA': 8.060665322580645,
+        'ELECTROCARDIOGRAMA': 6.17,
+        'LABORATORIO': 2.910279884907141,
+        'MASTOGRAFIA': 7.598455284552846,
+        'NUTRICION': 14.40878787878788,
+        'OPTOMETRIA': 8.877630264097073,
+        'PAPANICOLAOU': 6.809194915254237,
+        'RAYOS X': 4.602209381373216,
+        'ULTRASONIDO': 10.20286206896552
+    }
+}
+
+cabinas_por_sucursal = {
+    "COYOACAN": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 2,
+        "LABORATORIO": 13,
+        "RAYOS X": 2,
+        "TOMOGRAFIA": 1,
+        "ULTRASONIDO": 7,
+        "MASTOGRAFIA": 3,
+        "OPTOMETRIA": 6,
+        "RESONANCIA MAGNETICA": 1,
+        "ELECTROCARDIOGRAMA": 2,
+        "DENSITOMETRIA": 2
+    },
+    "CULIACAN": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 4,
+        "LABORATORIO": 7,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 1,
+        "ULTRASONIDO": 6,
+        "MASTOGRAFIA": 1,
+        "OPTOMETRIA": 4,
+        "RESONANCIA MAGNETICA": 1,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 1
+    },
+    "CULIACAN CAÑADAS": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 1,
+        "LABORATORIO": 5,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 0,
+        "ULTRASONIDO": 3,
+        "MASTOGRAFIA": 1,
+        "OPTOMETRIA": 2,
+        "RESONANCIA MAGNETICA": 0,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 1
+    },
+    "CULIACAN COLEGIO MILITAR": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 0,
+        "LABORATORIO": 4,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 1,
+        "ULTRASONIDO": 3,
+        "MASTOGRAFIA": 1,
+        "OPTOMETRIA": 2,
+        "RESONANCIA MAGNETICA": 1,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 1
+    },
+    "CULIACAN LA CONQUISTA": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 0,
+        "LABORATORIO": 2,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 0,
+        "ULTRASONIDO": 1,
+        "MASTOGRAFIA": 0,
+        "OPTOMETRIA": 1,
+        "RESONANCIA MAGNETICA": 0,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 0
+    },
+    "CULIACAN LAS TORRES": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 2,
+        "LABORATORIO": 4,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 0,
+        "ULTRASONIDO": 2,
+        "MASTOGRAFIA": 1,
+        "OPTOMETRIA": 2,
+        "RESONANCIA MAGNETICA": 0,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 1
+    },
+    "CULIACAN NAKAYAMA": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 0,
+        "LABORATORIO": 3,
+        "RAYOS X": 0,
+        "TOMOGRAFIA": 0,
+        "ULTRASONIDO": 1,
+        "MASTOGRAFIA": 0,
+        "OPTOMETRIA": 1,
+        "RESONANCIA MAGNETICA": 0,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 0
+    },
+    "CULIACAN UNIVERSITARIOS": {
+        "PAPANICOLAOU": 1,
+        "NUTRICION": 2,
+        "LABORATORIO": 4,
+        "RAYOS X": 1,
+        "TOMOGRAFIA": 0,
+        "ULTRASONIDO": 2,
+        "MASTOGRAFIA": 1,
+        "OPTOMETRIA": 2,
+        "RESONANCIA MAGNETICA": 0,
+        "ELECTROCARDIOGRAMA": 1,
+        "DENSITOMETRIA": 1
+    }
+} 

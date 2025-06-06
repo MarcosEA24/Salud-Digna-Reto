@@ -1,0 +1,33 @@
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+#queueChart {
+    width: 100%;
+    height: 400px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+#simulationStats {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+#simulationStats p {
+    margin-bottom: 10px;
+}
+
+#simulationStats span {
+    font-weight: bold;
+    color: #0d6efd;
+} 
